@@ -5,6 +5,14 @@ namespace App\Files\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * @property string $file_uuid
+ * @property string $title
+ * @property string $path
+ * @property int $size
+ */
 
 class File extends Model
 {

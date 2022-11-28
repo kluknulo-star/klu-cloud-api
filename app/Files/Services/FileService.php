@@ -11,15 +11,20 @@ class FileService
     {
     }
 
-    public function saveUserFile(string $userId,mixed $file,string $uuidFolder)
+    public function saveUserFile(int $userId,mixed $file,string $uuidFolder)
     {
         $title = $file->getClientOriginalName();
         $size = $file->getSize();
         $path = Storage::put("disk/$userId", $file);
 
-        $this->fileRepository->saveUserFile($uuidFolder, $title, $path, $size);
+        $this->fileRepository->saveUserFile($uuidFolder, $title, $path, $size, $userId);
 
         return true;
+    }
+
+    public function deleteUserFile(string $path) : void
+    {
+        $path = Storage::delete($path);
     }
 
 

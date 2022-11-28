@@ -21,6 +21,9 @@ return new class extends Migration
                 ->references('folder_uuid')
                 ->on('folders');
             $table->bigInteger('size');
+            $table->foreignId('user_id')
+                ->references('user_id')
+                ->on('users');
             $table->timestamps();
         });
     }

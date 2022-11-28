@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $folder_uuid
  * @property string $title
  * @property string $path
- * @property int $size
  */
 
 class Folder extends Model

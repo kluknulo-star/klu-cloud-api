@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\File;
 
 
-class RenameFileRequest extends FormRequest
+class DeleteFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,6 @@ class RenameFileRequest extends FormRequest
     {
         return [
             'file_title' => 'required|string',
-            'new_file_title' => 'required|string',
             'user_id' => 'required|int',
             'folder_name' => 'optional|string'
         ];

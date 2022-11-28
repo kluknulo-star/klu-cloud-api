@@ -18,7 +18,7 @@ class FolderController extends BaseController
     {
         $validated = $request->validated();
         $newFolder = $this->userService->createUserFolder($validated['folder_name'], $validated['user_id']);
-        return response()->json(['result' => "created new user ($newFolder->title)"]);
+        return response()->json(['result' => "created new folder ($newFolder->title)"]);
     }
 
 }

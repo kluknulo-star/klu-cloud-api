@@ -28,12 +28,13 @@ Route::get('/profile', [UserController::class, 'show'])->middleware('auth.token'
 
 Route::prefix('/folders')->middleware('auth.token')->group( function(){
     Route::post('', [FolderController::class, 'store'])->name('folder.store');
-    Route::get('', [FolderController::class, 'index'])->name('folder.index');
 });
 
 Route::prefix('/files')->middleware('auth.token')->group( function(){
-    Route::post('', [FileController::class, 'store'])->name('folder.store');
     Route::get('', [FileController::class, 'index'])->name('folder.index');
+    Route::post('', [FileController::class, 'store'])->name('folder.store');
+    Route::put('', [FileController::class, 'update'])->name('folder.update');
+    Route::delete('', [FileController::class, 'destroy'])->name('folder.destroy');
 });
 
 
