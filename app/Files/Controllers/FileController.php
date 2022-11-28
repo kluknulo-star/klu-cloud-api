@@ -43,7 +43,7 @@ class FileController extends BaseController
 
             $filesJson = FileResource::collection($files);
 
-            $disk['disk'][$folder->title ?? '__ROOT__'] = $filesJson;
+            $disk['disk'][$folder->title ?? '__ROOT_FOLDER__'] = $filesJson;
         }
 
         return response()->json($disk);
