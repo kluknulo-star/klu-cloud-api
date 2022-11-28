@@ -35,6 +35,10 @@ class LoginUserRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         $errors = $validator->errors()->messages();
-        throw new HttpResponseException(response()->json(['errors' => $errors], 422));
+        $example = [
+            'email' => 'example@mail.ru',
+            'password' => 'Password123!',
+        ];
+        throw new HttpResponseException(response()->json(['errors' => $errors, 'example' => $example], 422));
     }
 }

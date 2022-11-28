@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('name');
-            $table->string('email')->unique()->index();
-            $table->string('password');
-            $table->string('token');
-            $table->string('root_folder')->nullable();
-            $table->bigInteger('free_space');
+        Schema::create('folders', function (Blueprint $table) {
+            $table->uuid('folder_uuid')->primary();
+            $table->string('title')->nullable();
+            $table->foreignId('user_id')
+                ->references('user_id')
+                ->on('users');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('folders');
     }
 };

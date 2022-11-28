@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Users\Models\Folder;
+use App\Users\Models\User;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,8 +24,8 @@ class EnsureTokenIsValid
             return response()->json(['permission_denied' => 'Need a token'], 403);
         }
 
-        /** @var Folder $userModel */
-        $userModel = Folder::query()
+        /** @var User $userModel */
+        $userModel = User::query()
             ->where('token', '=', $requestToken)
             ->first();
 

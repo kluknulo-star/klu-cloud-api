@@ -5,7 +5,7 @@ namespace App\Folders\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class FolderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,7 @@ class UserResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'name' => $this->name,
-            'email' => $this->email,
-            'freeSpace' => $this->free_space
+            'folder_title' => $this->title ?? "ROOT",
         ];
     }
 }

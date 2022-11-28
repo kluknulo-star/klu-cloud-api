@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Folders\Requests;
+namespace App\Files\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\File;
 
-class CreateFolderRequest extends FormRequest
+
+class RenameFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,17 +28,15 @@ class CreateFolderRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'folder_name' => 'required|string',
-            'user_id' => 'required',
+            'file_title' => 'required|string',
+            'new_file_title' => 'required|string',
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
         $errors = $validator->errors()->messages();
-        $example = [
-            'folder_name' => 'myNewFolder',
-        ];
-        throw new HttpResponseException(response()->json(['errors' => $errors, 'example' => $example], 422));
+
+        throw new HttpResponseException(response()->json(['errors' => $errors], 422));
     }
 }

@@ -2,18 +2,24 @@
 
 namespace App\Folders\Models;
 
-
+use App\Files\Models\File;
+use App\Users\Models\User;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 /**
- * @property int $user_id
- * @property string $token
- * @property string $email
- * @property string $name
+ * @property string $folder_uuid
+ * @property string $title
+ * @property string $path
+ * @property int $size
  */
 
-class Folder extends Authenticatable
+class Folder extends Model
 {
+    use HasFactory;
+    use HasUuids;
 
-    protected $primaryKey = 'folder_uid';
+    protected $primaryKey = 'folder_uuid';
     /**
      * The attributes that are mass assignable.
      *
@@ -21,22 +27,14 @@ class Folder extends Authenticatable
      */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function files()
+    {
+        return $this->hasMany(File::class, 'folder_uuid', 'folder_uuid');
+    }
+
 }

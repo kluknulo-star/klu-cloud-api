@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Files\Controllers\FileController;
+use App\Folders\Controllers\FolderController;
 use App\Users\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,15 @@ Route::post('/register', [UserController::class, 'store'])->name('users.store');
 Route::post('/login', [UserController::class, 'login'])->name('users.login');
 Route::get('/profile', [UserController::class, 'show'])->middleware('auth.token')->name('users.store');
 
+Route::prefix('/folders')->middleware('auth.token')->group( function(){
+    Route::post('', [FolderController::class, 'store'])->name('folder.store');
+    Route::get('', [FolderController::class, 'index'])->name('folder.index');
+});
+
+Route::prefix('/files')->middleware('auth.token')->group( function(){
+    Route::post('', [FileController::class, 'store'])->name('folder.store');
+    Route::get('', [FileController::class, 'index'])->name('folder.index');
+});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

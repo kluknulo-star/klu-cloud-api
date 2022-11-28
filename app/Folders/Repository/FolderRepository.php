@@ -4,22 +4,31 @@ namespace App\Folders\Repository;
 
 
 use App\Folders\Models\Folder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class FolderRepository
 {
-    public function findUser(int $user_id)
+    public function createRootFolder(int $user_id) : Builder|Model
     {
-        return Folder::query()->findOrFail($user_id);
+        return Folder::query()
+            ->firstOrCreate([
+                'title' => null,
+                'user_id' => $user_id,
+            ]);
     }
 
-    public function store(array $validated)
+    public function createUserFolder(string $folderTitile, int $user_id) : Builder|Model
     {
-        return Folder::create($validated);
+        return Folder::query()
+            ->firstOrCreate([
+                'title' => $folderTitile,
+                'user_id' => $user_id,
+            ]);
     }
 
-    public function findUserByEmail(string $email) : \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+    public function findFolderByTitle(string $folderTitle, int $user_id) : Builder|Model
     {
-        return Folder::query()->where('email','=', $email)
-                ->first();
+        return Folder::query()->firstOrCreate(['title' => $folderTitle, 'user_id' => $user_id]);
     }
 }

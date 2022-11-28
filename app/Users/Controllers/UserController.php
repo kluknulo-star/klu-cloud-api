@@ -4,6 +4,9 @@ namespace App\Users\Controllers;
 
 
 
+use App\Folders\Models\Folder;
+use App\Folders\Services\FolderService;
+use App\Users\Models\User;
 use App\Users\Requests\LoginUserRequest;
 use App\Users\Requests\RegisterUserRequest;
 
@@ -19,6 +22,7 @@ class UserController extends BaseController
 
     public function __construct(
         private UserService $userService,
+        private FolderService $folderService
     )
     {
 
@@ -28,8 +32,13 @@ class UserController extends BaseController
     {
         $validated = $request->validated();
         $newUser = $this->userService->store($validated);
+
+        /** @var Folder $folder */
+        $folder = $this->folderService->createRootFolder($newUser->user_id);
+        $this->userService->addRootFolder($newUser, $folder->folder_uuid);
+
         return response()->json(['result' => "created new user ($newUser->name)",
-            'token' => "$newUser->token"], 201);
+            'token' => $newUser->token], 201);
     }
 
     public function show(Request $request): JsonResponse
@@ -44,6 +53,7 @@ class UserController extends BaseController
         $validated = $request->validated();
         if (Auth::attempt($validated)) {
             $user = $this->userService->findUserByEmail($validated);
+            /** @var User $user */
             $loginInform = [
                 'name' => $user->name,
                 'email' => $user->email,

@@ -34,6 +34,14 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
             'throw' => false,
+            'visibility' => 'public',
+        ],
+
+        'disk' => [
+            'driver' => 'local',
+            'root' => storage_path('app/disk'),
+            'throw' => false,
+            'visibility' => 'public',
         ],
 
         'public' => [

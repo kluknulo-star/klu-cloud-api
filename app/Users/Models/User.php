@@ -3,6 +3,8 @@
 namespace App\Users\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Files\Models\File;
+use App\Folders\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $token
  * @property string $email
  * @property string $name
+ * @property string $root_folder
  */
 
 class User extends Authenticatable
@@ -45,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class, 'user_id', 'user_id');
+    }
 }
