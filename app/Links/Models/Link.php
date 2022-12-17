@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Files\Models;
+namespace App\Links\Models;
 
-use App\Links\Models\Link;
+use App\Files\Models\File;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property string $file_uuid
+ * @property string $link_uuid
  * @property string $title
  * @property string $path
  * @property int $size
  */
 
-class File extends Model
+class Link extends Model
 {
     use HasFactory;
     use HasUuids;
 
-    protected $primaryKey = 'file_uuid';
+    protected $primaryKey = 'link_uuid';
     /**
      * The attributes that are mass assignable.
      *
@@ -28,10 +27,9 @@ class File extends Model
      */
     protected $guarded = [];
 
-    public function link()
+    public function file()
     {
-        return $this->hasOne(Link::class, 'file_uuid', 'file_uuid');
+        return $this->belongsTo(File::class, 'file_uuid', 'file_uuid');
     }
-
 
 }

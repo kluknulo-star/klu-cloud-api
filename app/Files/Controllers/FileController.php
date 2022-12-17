@@ -4,11 +4,14 @@ namespace App\Files\Controllers;
 
 use App\Files\Repository\FileRepository;
 use App\Files\Requests\CreateFileRequest;
+use App\Files\Requests\TitleFileRequest;
 use App\Files\Requests\TitleFolderFileRequest;
 use App\Files\Requests\RenameFileRequest;
 use App\Files\Resources\FileResource;
 use App\Files\Services\FileService;
 use App\Folders\Repository\FolderRepository;
+use App\Links\Repository\LinkRepository;
+use App\Links\Requests\LinkRequest;
 use App\Users\Repository\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,7 +25,7 @@ class FileController extends BaseController
         private FileService $fileService,
         private FileRepository $fileRepository,
         private UserRepository $userRepository,
-        private FolderRepository $folderRepository
+        private FolderRepository $folderRepository,
     )
     {
 
@@ -145,10 +148,9 @@ class FileController extends BaseController
         return Storage::download($file->path);
     }
 
-    public function shared(Request $request, string $shared_uuid)
+    public function index(TitleFileRequest $request)
     {
-        dd(url()->full());
-        dd($shared_uuid);
+
     }
 
     public function test()

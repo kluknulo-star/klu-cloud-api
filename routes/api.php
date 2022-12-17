@@ -3,6 +3,7 @@
 
 use App\Files\Controllers\FileController;
 use App\Folders\Controllers\FolderController;
+use App\Links\Controllers\LinkController;
 use App\Users\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,15 +32,19 @@ Route::prefix('/folders')->middleware('auth.token')->group( function(){
 });
 
 Route::prefix('/files')->middleware('auth.token')->group( function(){
-    Route::get('', [FileController::class, 'download'])->name('file.download');
+    Route::get('', [FileController::class, 'index'])->name('file.index');
     Route::post('', [FileController::class, 'store'])->name('file.store');
     Route::put('', [FileController::class, 'update'])->name('file.update');
     Route::delete('', [FileController::class, 'destroy'])->name('file.destroy');
+
+    Route::get('/download', [FileController::class, 'download'])->name('file.download');
+    Route::post('/share', [LinkController::class, 'store'])->name('file.share');
+    Route::delete('/private', [LinkController::class, 'destroy'])->name('file.greedy');
 });
 
 
 Route::get('/disk', [FileController::class, 'disk'])->middleware('auth.token');
-Route::get('/shared/{shared_uuid}', [FileController::class, 'shared']);
+Route::get('/shared/{link_uuid}', [LinkController::class, 'download'])->name('link.shared');
 Route::get('/test', [FileController::class, 'test']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
