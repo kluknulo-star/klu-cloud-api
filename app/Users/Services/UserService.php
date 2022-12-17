@@ -10,32 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function __construct(protected UserRepository $userRepository)
-    {
-    }
-
-    public function findUser(int $user_id) : Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
-    {
-        return $this->userRepository->findUser($user_id);
-    }
-
-    public function findUserByEmail(array $validated) : Builder|\Illuminate\Database\Eloquent\Model
-    {
-        return $this->userRepository->findUserByEmail($validated['email']);
-    }
-
-    public function store(array $validated): User
-    {
-        $validated['password'] = Hash::make($validated['password']);
-        $validated['token'] = Hash::make(rand(0, 999999));
-        $validated['free_space'] = 104857600;
-        return $this->userRepository->store($validated);
-    }
-
     public function addRootFolder(User $newUser, string $folder_uuid) : bool
     {
         return $newUser->update(['root_folder' => $folder_uuid]);
     }
-
-
 }

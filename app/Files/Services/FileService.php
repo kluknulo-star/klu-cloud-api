@@ -7,19 +7,11 @@ use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
-    public function __construct(protected FileRepository $fileRepository)
+
+    public function saveUserFile(int $userId,mixed $file,string $uuidFolder) : bool|string
     {
-    }
-
-    public function saveUserFile(int $userId,mixed $file,string $uuidFolder)
-    {
-        $title = $file->getClientOriginalName();
-        $size = $file->getSize();
-        $path = Storage::put("disk/$userId", $file);
-
-        $this->fileRepository->saveUserFile($uuidFolder, $title, $path, $size, $userId);
-
-        return true;
+//        return Storage::append("disk/$userId", $file);
+        return Storage::put("disk/$userId", $file);
     }
 
     public function deleteUserFile(string $path) : void
@@ -27,6 +19,17 @@ class FileService
         $path = Storage::delete($path);
     }
 
+    public function isFilesPhpMimes(string $fileMime) : bool
+    {
+        $mimesPhp = [
+            'application/x-httpd-php',
+            'application/php',
+            'application/x-php',
+            'text/php',
+            'text/x-php',
+            'application/x-httpd-php-source'
+        ];
 
-
+        return in_array($fileMime, $mimesPhp);
+    }
 }

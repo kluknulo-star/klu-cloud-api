@@ -29,7 +29,7 @@ class CreateFileRequest extends FormRequest
     {
         return [
             'file' => ['required',
-                File::types(['pdf', 'txt', 'docx', 'doc', 'xz'])->between(1, 20480)
+                File::default()->max(20480)
                 ],
             'user_id' => 'required|int',
             'folder_name' => 'optional|string'

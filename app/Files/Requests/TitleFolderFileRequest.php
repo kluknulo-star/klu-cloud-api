@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\File;
 
 
-class DeleteFileRequest extends FormRequest
+class TitleFolderFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

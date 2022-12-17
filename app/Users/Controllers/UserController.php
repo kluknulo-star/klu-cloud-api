@@ -3,10 +3,11 @@
 namespace App\Users\Controllers;
 
 
-
 use App\Folders\Models\Folder;
+use App\Folders\Repository\FolderRepository;
 use App\Folders\Services\FolderService;
 use App\Users\Models\User;
+use App\Users\Repository\UserRepository;
 use App\Users\Requests\LoginUserRequest;
 use App\Users\Requests\RegisterUserRequest;
 
@@ -22,28 +23,33 @@ class UserController extends BaseController
 
     public function __construct(
         private UserService $userService,
-        private FolderService $folderService
+        private FolderService $folderService,
+        protected UserRepository $userRepository,
+        protected FolderRepository $folderRepository
     )
     {
-
     }
 
     public function store(RegisterUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $newUser = $this->userService->store($validated);
+        $newUser = $this->userRepository->store($validated);
 
         /** @var Folder $folder */
-        $folder = $this->folderService->createRootFolder($newUser->user_id);
-        $this->userService->addRootFolder($newUser, $folder->folder_uuid);
+        if (!$this->folderService->createRootFolder($newUser->user_id))
+        {
+            return response()->json(['error' => "ошибка при создании корневой папки"], );
+        }
 
+        $folder = $this->folderRepository->createRootFolder($newUser->user_id);
+        $this->userService->addRootFolder($newUser, $folder->folder_uuid);
         return response()->json(['result' => "created new user ($newUser->name)",
             'token' => $newUser->token], 201);
     }
 
     public function show(Request $request): JsonResponse
     {
-        $user = $this->userService->findUser($request['user_id']);
+        $user = $this->userRepository->findUser($request['user_id']);
         $profile = new UserResource($user);
         return response()->json($profile);
     }
@@ -51,19 +57,17 @@ class UserController extends BaseController
     public function login(LoginUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        if (Auth::attempt($validated)) {
-            $user = $this->userService->findUserByEmail($validated);
-            /** @var User $user */
-            $loginInform = [
-                'name' => $user->name,
-                'email' => $user->email,
-                'token' => $user->token
-            ];
-            return response()->json($loginInform);
-        }
-        else
-        {
+        if (!Auth::attempt($validated)) {
             return response()->json(['error' => 'The invalid input data'],401);
         }
+
+        $user = $this->userRepository->findUserByEmail($validated['email']);
+        /** @var User $user */
+        $loginInform = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'token' => $user->token
+        ];
+        return response()->json($loginInform);
     }
 }

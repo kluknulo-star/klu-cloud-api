@@ -31,12 +31,16 @@ Route::prefix('/folders')->middleware('auth.token')->group( function(){
 });
 
 Route::prefix('/files')->middleware('auth.token')->group( function(){
-    Route::get('', [FileController::class, 'index'])->name('folder.index');
-    Route::post('', [FileController::class, 'store'])->name('folder.store');
-    Route::put('', [FileController::class, 'update'])->name('folder.update');
-    Route::delete('', [FileController::class, 'destroy'])->name('folder.destroy');
+    Route::get('', [FileController::class, 'download'])->name('file.download');
+    Route::post('', [FileController::class, 'store'])->name('file.store');
+    Route::put('', [FileController::class, 'update'])->name('file.update');
+    Route::delete('', [FileController::class, 'destroy'])->name('file.destroy');
 });
 
+
+Route::get('/disk', [FileController::class, 'disk'])->middleware('auth.token');
+Route::get('/shared/{shared_uuid}', [FileController::class, 'shared']);
+Route::get('/test', [FileController::class, 'test']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
