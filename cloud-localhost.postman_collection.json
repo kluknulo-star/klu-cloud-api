@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "eb3a50a4-f716-4248-8e0b-13ea43413805",
-		"name": "LaravelCollection",
+		"_postman_id": "b63cb2c0-6cfa-4f60-916d-78930d83f858",
+		"name": "cloud-localhost",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"kirill\",\n    \"email\": \"kluknulo1@mail.ru\",\n    \"password\": \"Kirillkirill1!\",\n    \"password_confirmation\": \"Kirillkirill1!\"\n}",
+					"raw": "{\n    \"name\": \"kirill\",\n    \"email\": \"kluknulo8@mail.ru\",\n    \"password\": \"Kirillkirill1!\",\n    \"password_confirmation\": \"Kirillkirill1!\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,15 +69,27 @@
 		},
 		{
 			"name": "Profile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"folder_name\": \"myNewFolder\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost/api/profile",
 					"protocol": "http",
@@ -99,7 +111,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
@@ -133,7 +145,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
@@ -143,7 +155,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "ooo_kinokompaniya_stv_6128776.pdf"
+							"src": "TOAU.docx"
 						},
 						{
 							"key": "folder_title",
@@ -180,7 +192,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
@@ -190,14 +202,13 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "ooo_kinokompaniya_stv_6128776.pdf"
+							"src": "SetiFull.docx"
 						},
 						{
 							"key": "folder_title",
 							"value": "createFolderWithRequest",
 							"contentType": "application/json",
-							"type": "default",
-							"disabled": true
+							"type": "default"
 						}
 					],
 					"options": {
@@ -227,13 +238,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"file_title\": \"example.pdf\",\n    \"new_file_title\": \"EditedExample.pdf\"\n}",
+					"raw": "{\n    \"file_title\": \"receipt.pdf\",\n    \"new_file_title\": \"EditedExample.pdf\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -261,13 +272,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"file_title\": \"EditedExample.pdf\"\n}",
+					"raw": "{\n    \"file_title\": \"SetiFull.docx\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -295,10 +306,47 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
 						"type": "default"
 					}
 				],
+				"url": {
+					"raw": "http://localhost/api/disk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"disk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"See_it.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost/api/files",
 					"protocol": "http",
@@ -308,6 +356,128 @@
 					"path": [
 						"api",
 						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Share file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"6.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/files/share",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"files",
+						"share"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download shared file",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "ooo_kinokompaniya_stv_6128776.pdf"
+						},
+						{
+							"key": "folder_title",
+							"value": "createFolderWithRequest",
+							"contentType": "application/json",
+							"type": "default",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/shared/98024453-3f42-430d-8052-c9ab35fcafd0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"shared",
+						"98024453-3f42-430d-8052-c9ab35fcafd0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Share Link File",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$/zx6J2sSVB3xT1VEOTd5Ru7n.rwmUHvHTRNKq/kntC5sNP2RNHY7u",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"6.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/files/private",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"files",
+						"private"
 					]
 				}
 			},
