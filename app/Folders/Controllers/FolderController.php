@@ -5,7 +5,6 @@ namespace App\Folders\Controllers;
 use App\Folders\Repository\FolderRepository;
 use App\Folders\Requests\CreateFolderRequest;
 use App\Folders\Services\FolderService;
-use App\Users\Repository\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -23,7 +22,7 @@ class FolderController extends BaseController
     {
         $validated = $request->validated();
         if (!$this->folderService->createUserFolder($validated['folder_name'], $validated['user_id'])){
-            return response()->json(['error' => "ошибка при создании корневой папки"], );
+            return response()->json(['error' => "Error when creating the user's root folder"]);
         }
         $newFolder = $this->folderRepository->createUserFolder($validated['folder_name'], $validated['user_id']);
 

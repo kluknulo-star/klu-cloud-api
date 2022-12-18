@@ -13,8 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return "<h1>This is homepage</h1>";
-});
-
 require __DIR__.'/auth.php';

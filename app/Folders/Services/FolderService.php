@@ -11,6 +11,10 @@ class FolderService
 
     public function createRootFolder(int $user_id)
     {
+        if (Storage::exists("disk/$user_id"))
+        {
+            Storage::deleteDirectory("disk/$user_id");
+        }
         return Storage::makeDirectory("disk/$user_id");
     }
 

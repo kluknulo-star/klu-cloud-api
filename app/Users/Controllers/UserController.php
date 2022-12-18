@@ -34,16 +34,17 @@ class UserController extends BaseController
     {
         $validated = $request->validated();
         $newUser = $this->userRepository->store($validated);
-
         /** @var Folder $folder */
+
         if (!$this->folderService->createRootFolder($newUser->user_id))
         {
-            return response()->json(['error' => "ошибка при создании корневой папки"], );
+            optional($newUser)->delete();
+            return response()->json(['error' => "Error when creating the user's root folder"], );
         }
 
         $folder = $this->folderRepository->createRootFolder($newUser->user_id);
         $this->userService->addRootFolder($newUser, $folder->folder_uuid);
-        return response()->json(['result' => "created new user ($newUser->name)",
+        return response()->json(['result' => "Created new user ($newUser->name)",
             'token' => $newUser->token], 201);
     }
 

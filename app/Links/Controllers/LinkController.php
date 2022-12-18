@@ -26,14 +26,14 @@ class LinkController extends BaseController
 
         if (!$file)
         {
-            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
+            return response()->json(['error' => 'File does not exist ' . $request['file_title']]);
         }
 
         $link = $this->linkRepository->createLink($file->file_uuid);
         $url = route('link.shared', ['link_uuid' => $link->link_uuid]);
 
         return response()->json([
-            'result' => 'Публичная ссылка на файл ' . $file->title,
+            'result' => 'Public link to the file ' . $file->title,
             'url' => $url
         ]);
 
@@ -47,7 +47,7 @@ class LinkController extends BaseController
         if (!$file || !Storage::exists($file->path)){
             optional($file)->delete();
             optional($link)->delete();
-            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
+            return response()->json(['error' => 'File does not exist ' . $request['file_title']]);
         }
         return Storage::download($file->path);
     }
@@ -59,12 +59,12 @@ class LinkController extends BaseController
 
         if (!$link)
         {
-            return response()->json(['error' => 'Файл ' . $request['file_title'] .' является приватным']);
+            return response()->json(['error' => 'File is already private (' . $request['file_title'] .')']);
         }
 
         $link->delete();
 
-        return response()->json([ 'result' => 'Публичная ссылка была удалена для файла ' . $file->title ]);
+        return response()->json([ 'result' => 'Public link removed for file ' . $file->title ]);
     }
 
 

@@ -18,10 +18,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/greeting', function () {
-    return 'Hello World';
-});
-
 
 Route::post('/register', [UserController::class, 'store'])->name('users.store');
 Route::post('/login', [UserController::class, 'login'])->name('users.login');
@@ -45,7 +41,6 @@ Route::prefix('/files')->middleware('auth.token')->group( function(){
 
 Route::get('/disk', [FileController::class, 'disk'])->middleware('auth.token');
 Route::get('/shared/{link_uuid}', [LinkController::class, 'download'])->name('link.shared');
-Route::get('/test', [FileController::class, 'test']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

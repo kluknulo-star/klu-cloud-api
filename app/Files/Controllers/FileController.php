@@ -10,8 +10,6 @@ use App\Files\Requests\RenameFileRequest;
 use App\Files\Resources\FileResource;
 use App\Files\Services\FileService;
 use App\Folders\Repository\FolderRepository;
-use App\Links\Repository\LinkRepository;
-use App\Links\Requests\LinkRequest;
 use App\Users\Repository\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -54,17 +52,17 @@ class FileController extends BaseController
         $isExistFile = $this->fileRepository->findFile($request['user_id'], $file->getClientOriginalName());
 
         if ($isExistFile){
-            return response()->json(['error' => 'Файл с таким именем уже существует']);
+            return response()->json(['error' => 'File with that title already exists']);
         }
 
         if ($this->fileService->isFilesPhpMimes($file->getMimeType()))
         {
-            return response()->json(['error' => 'Не поддерживается файлы php']);
+            return response()->json(['error' => 'Php files are not supported']);
         }
 
         if ($file->getSize() > $user->free_space)
         {
-            return response()->json(['error' => 'Не хватает свободного пространства']);
+            return response()->json(['error' => 'Not enough free disk space']);
         }
         $user->free_space -= $file->getSize();
         $user->save();
@@ -79,14 +77,14 @@ class FileController extends BaseController
         $path = $this->fileService->saveUserFile($request['user_id'], $file, $uuidFolder);
 
         if (!$path){
-            return response()->json(['error' => "Ошибка при загрузке файла на сервер"]);
+            return response()->json(['error' => 'Error when uploading a file to the server']);
         }
 
         $title = $file->getClientOriginalName();
         $size = $file->getSize();
         $this->fileRepository->saveUserFile($uuidFolder, $title, $path, $size, $request['user_id']);
 
-        return response()->json(['result' => 'Сохранен файл ' . $file->getClientOriginalName() ]);
+        return response()->json(['result' => 'File saved (' . $file->getClientOriginalName().')' ]);
     }
 
 
@@ -100,17 +98,17 @@ class FileController extends BaseController
 
         if($isTitleExist)
         {
-            return response()->json(['error' => "Уже существует файл с названием $newTitle"]);
+            return response()->json(['error' => "The file already exists ($newTitle)"]);
         }
 
         if (!$file)
         {
-            return response()->json(['error' => "Не существует файла $oldTitle"]);
+            return response()->json(['error' => "File does not exist ($oldTitle)"]);
         }
         $file->title = $newTitle;
         $file->save();
 
-        return response()->json(['result' => "Изменено название с $oldTitle на $newTitle"]);
+        return response()->json(['result' => "Title was changed from $oldTitle on $newTitle"]);
     }
 
     public function destroy(TitleFolderFileRequest $request) : JsonResponse
@@ -118,7 +116,7 @@ class FileController extends BaseController
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
         if (!$file)
         {
-            return response()->json(['error' => "Не существует файла ". $request['file_title']]);
+            return response()->json(['error' => 'File does not exist (' . $request['file_title'] .')']);
         }
 
         $user = $this->userRepository->findUser($request['user_id']);
@@ -129,7 +127,7 @@ class FileController extends BaseController
         $this->fileService->deleteUserFile($file->path);
         $file->delete();
 
-        return response()->json(['result' => "Удален файл ". $request['file_title']]);
+        return response()->json(['result' => 'File deleted ('. $request['file_title'].')']);
     }
 
     public function download(TitleFolderFileRequest $request)
@@ -139,7 +137,7 @@ class FileController extends BaseController
 
         if (!$file || !Storage::exists($file->path)){
             optional($file)->delete();
-            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
+            return response()->json(['error' => 'File does not exist (' . $request['file_title'] . ')']);
         }
         return Storage::download($file->path);
     }
@@ -153,7 +151,7 @@ class FileController extends BaseController
     {
         $file = $this->fileRepository->findFile(1, 'See_it.docx');
         if (!$file || !Storage::exists(optional($file)->path)){
-            return response()->json(['error' => 'Файла не существует на сервере ' ]);
+            return response()->json(['error' => 'File does not exist']);
         }
 
         return Storage::download($file->path);
