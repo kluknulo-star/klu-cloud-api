@@ -100,7 +100,7 @@ class FileController extends BaseController
 
         if($isTitleExist)
         {
-            return response()->json(['error' => "Ужк существует файл с названием $newTitle"]);
+            return response()->json(['error' => "Уже существует файл с названием $newTitle"]);
         }
 
         if (!$file)
@@ -137,13 +137,9 @@ class FileController extends BaseController
         $request->validated();
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
 
-        if (!$file)
-        {
-            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
-        }
-        if (!Storage::exists($file->path)){
+        if (!$file || !Storage::exists($file->path)){
             $file->delete();
-            return response()->json(['error' => 'Произошла ошибка. Файла ' . $request['file_title'] .' не существует']);
+            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
         }
         return Storage::download($file->path);
     }
@@ -156,7 +152,7 @@ class FileController extends BaseController
     public function test()
     {
         $file = $this->fileRepository->findFile(1, 'See_it.docx');
-        if (!Storage::exists($file->path)){
+        if (!$file || !Storage::exists(optional($file)->path)){
             return response()->json(['error' => 'Файла не существует на сервере ' ]);
         }
 

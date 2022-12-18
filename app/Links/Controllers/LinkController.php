@@ -4,13 +4,8 @@ namespace App\Links\Controllers;
 
 
 use App\Files\Repository\FileRepository;
-use App\Files\Services\FileService;
-use App\Folders\Repository\FolderRepository;
-use App\Links\Models\Link;
 use App\Links\Repository\LinkRepository;
 use App\Links\Requests\LinkRequest;
-use App\Users\Repository\UserRepository;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +48,7 @@ class LinkController extends BaseController
         if (!Storage::exists($file->path)){
             $file->delete();
             $link->delete();
-            return response()->json(['error' => 'Произошла ошибка. Файла ' . $request['file_title'] .' не существует']);
+            return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
         }
         return Storage::download($file->path);
     }
