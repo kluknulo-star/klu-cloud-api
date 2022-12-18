@@ -18,7 +18,6 @@ class LinkController extends BaseController
         private LinkRepository $linkRepository
     )
     {
-
     }
 
     public function store(LinkRequest $request)
@@ -45,9 +44,9 @@ class LinkController extends BaseController
         $link = $this->linkRepository->findLink($link_uuid);
         $file = $link->file;
 
-        if (!Storage::exists($file->path)){
-            $file->delete();
-            $link->delete();
+        if (!$file || !Storage::exists($file->path)){
+            optional($file)->delete();
+            optional($link)->delete();
             return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
         }
         return Storage::download($file->path);
