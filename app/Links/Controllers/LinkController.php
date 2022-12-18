@@ -42,7 +42,7 @@ class LinkController extends BaseController
     public function download(Request $request, string $link_uuid)
     {
         $link = $this->linkRepository->findLink($link_uuid);
-        $file = $link->file;
+        $file = optional($link)->file;
 
         if (!$file || !Storage::exists($file->path)){
             optional($file)->delete();
