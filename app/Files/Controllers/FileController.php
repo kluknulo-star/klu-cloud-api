@@ -138,7 +138,7 @@ class FileController extends BaseController
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
 
         if (!$file || !Storage::exists($file->path)){
-            $file->delete();
+            optional($file)->delete();
             return response()->json(['error' => 'Не существует файла ' . $request['file_title']]);
         }
         return Storage::download($file->path);
