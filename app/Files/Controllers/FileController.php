@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 class FileController extends BaseController
@@ -28,6 +29,12 @@ class FileController extends BaseController
     {
 
     }
+
+    /**
+     * Show all files and folders in user disk
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function disk(Request $request) : JsonResponse
     {
         $user = $this->userRepository->findUser($request["user_id"]);
@@ -43,6 +50,11 @@ class FileController extends BaseController
         return response()->json($disk);
     }
 
+    /**
+     * Create file on user drive
+     * @param CreateFileRequest $request
+     * @return JsonResponse
+     */
     public function store(CreateFileRequest $request): JsonResponse
     {
         $file = $request->file('file');
@@ -86,6 +98,11 @@ class FileController extends BaseController
     }
 
 
+    /**
+     * Rename file on user drive
+     * @param RenameFileRequest $request
+     * @return JsonResponse
+     */
     public function update(RenameFileRequest $request): JsonResponse
     {
         $oldTitle = $request['file_title'];
@@ -109,6 +126,11 @@ class FileController extends BaseController
         return response()->json(['result' => "Title was changed from $oldTitle on $newTitle"]);
     }
 
+    /**
+     * Delete file on user drive
+     * @param TitleFolderFileRequest $request
+     * @return JsonResponse
+     */
     public function destroy(TitleFolderFileRequest $request) : JsonResponse
     {
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
@@ -128,6 +150,11 @@ class FileController extends BaseController
         return response()->json(['result' => 'File deleted ('. $request['file_title'].')']);
     }
 
+    /**
+     * Download file from user disk
+     * @param TitleFolderFileRequest $request
+     * @return JsonResponse|StreamedResponse
+     */
     public function download(TitleFolderFileRequest $request)
     {
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
@@ -151,18 +178,4 @@ class FileController extends BaseController
         return Storage::download($file->path);
     }
 
-    public function index(TitleFileRequest $request)
-    {
-
-    }
-
-    public function test()
-    {
-        $file = $this->fileRepository->findFile(1, 'See_it.docx');
-        if (!$file || !Storage::exists(optional($file)->path)){
-            return response()->json(['error' => 'File does not exist']);
-        }
-
-        return Storage::download($file->path);
-    }
 }

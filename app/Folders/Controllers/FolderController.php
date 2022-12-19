@@ -18,6 +18,11 @@ class FolderController extends BaseController
     {
     }
 
+    /**
+     * Create new folder or get existing
+     * @param CreateFolderRequest $request
+     * @return JsonResponse
+     */
     public function store(CreateFolderRequest $request): JsonResponse
     {
         $validated = $request->validated();

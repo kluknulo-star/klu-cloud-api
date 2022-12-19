@@ -10,13 +10,12 @@ class FileService
 
     public function saveUserFile(int $userId,mixed $file,string $uuidFolder) : bool|string
     {
-//        return Storage::append("disk/$userId", $file);
         return Storage::put("disk/$userId", $file);
     }
 
-    public function deleteUserFile(string $path) : void
+    public function deleteUserFile(string $path): bool
     {
-        $path = Storage::delete($path);
+        return Storage::delete($path);
     }
 
     public function isFilesPhpMimes(string $fileMime) : bool

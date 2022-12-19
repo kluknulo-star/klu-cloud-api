@@ -7,9 +7,11 @@ use App\Files\Repository\FileRepository;
 use App\Links\Repository\LinkRepository;
 use App\Links\Requests\LinkRequest;
 use App\Users\Repository\UserRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 class LinkController extends BaseController
@@ -22,7 +24,12 @@ class LinkController extends BaseController
     {
     }
 
-    public function store(LinkRequest $request)
+    /**
+     * Generate or view existing link to public download
+     * @param LinkRequest $request
+     * @return JsonResponse
+     */
+    public function store(LinkRequest $request): JsonResponse
     {
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
 
@@ -41,7 +48,13 @@ class LinkController extends BaseController
 
     }
 
-    public function download(Request $request, string $link_uuid)
+    /**
+     * Download by public link
+     * @param Request $request
+     * @param string $link_uuid
+     * @return JsonResponse|StreamedResponse
+     */
+    public function download(Request $request, string $link_uuid): StreamedResponse|JsonResponse
     {
         $link = $this->linkRepository->findLink($link_uuid);
         $file = optional($link)->file;
@@ -62,7 +75,12 @@ class LinkController extends BaseController
         return Storage::download($file->path);
     }
 
-    public function destroy(LinkRequest $request)
+    /**
+     * Delete public link
+     * @param LinkRequest $request
+     * @return JsonResponse
+     */
+    public function destroy(LinkRequest $request): JsonResponse
     {
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
         $link = $file->link;

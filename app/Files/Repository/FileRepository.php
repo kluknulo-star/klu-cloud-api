@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class FileRepository
 {
+    /**
+     * Save user file in DB
+     * @param string $uuidFolder
+     * @param string $title
+     * @param string $path
+     * @param int $size
+     * @param int $userId
+     * @return Builder|Model
+     */
     public function saveUserFile(string $uuidFolder, string $title, string $path, int $size, int $userId): Builder|Model
     {
         return File::query()
@@ -22,6 +31,12 @@ class FileRepository
             ]);
     }
 
+    /**
+     * Find user file by user_id
+     * @param int $user_id
+     * @param string $title
+     * @return Builder|Model|null
+     */
     public function findFile(int $user_id, string $title): Builder|Model|null
     {
         return File::query()

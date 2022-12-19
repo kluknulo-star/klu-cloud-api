@@ -30,6 +30,11 @@ class UserController extends BaseController
     {
     }
 
+    /**
+     * Register new user
+     * @param RegisterUserRequest $request
+     * @return JsonResponse
+     */
     public function store(RegisterUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -48,6 +53,11 @@ class UserController extends BaseController
             'token' => $newUser->token], 201);
     }
 
+    /**
+     * Get profile of user
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function show(Request $request): JsonResponse
     {
         $user = $this->userRepository->findUser($request['user_id']);
@@ -55,6 +65,11 @@ class UserController extends BaseController
         return response()->json($profile);
     }
 
+    /**
+     * Authenticate user
+     * @param LoginUserRequest $request
+     * @return JsonResponse
+     */
     public function login(LoginUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
