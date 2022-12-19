@@ -6,6 +6,7 @@ namespace App\Links\Controllers;
 use App\Files\Repository\FileRepository;
 use App\Links\Repository\LinkRepository;
 use App\Links\Requests\LinkRequest;
+use App\Users\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,8 @@ class LinkController extends BaseController
 {
     public function __construct(
         private FileRepository $fileRepository,
-        private LinkRepository $linkRepository
+        private LinkRepository $linkRepository,
+        private UserRepository $userRepository
     )
     {
     }
@@ -44,7 +46,15 @@ class LinkController extends BaseController
         $link = $this->linkRepository->findLink($link_uuid);
         $file = optional($link)->file;
 
-        if (!$file || !Storage::exists($file->path)){
+        if(!$file)
+        {
+            return response()->json(['error' => 'File does not exist ' . $request['file_title']]);
+        }
+
+        if (!Storage::exists($file->path)){
+            $user = $this->userRepository->findUser($file->user_id);
+            $user->free_space += optional($file)->size;
+            $user->save();
             optional($file)->delete();
             optional($link)->delete();
             return response()->json(['error' => 'File does not exist ' . $request['file_title']]);

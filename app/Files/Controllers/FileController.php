@@ -33,17 +33,15 @@ class FileController extends BaseController
         $user = $this->userRepository->findUser($request["user_id"]);
         $folders = $user->folders()->orderByDesc('created_at')->paginate(1000);
 
-        $disk['free_space'] = $user->free_space;
+        $diskSpace = 0;
         foreach ($folders as $folder)
         {
             $files = $folder->files()->paginate(100);
             $filesJson = FileResource::collection($files);
             $disk['disk'][$folder->title ?? '__ROOT_FOLDER__'] = $filesJson;
         }
-
         return response()->json($disk);
     }
-
 
     public function store(CreateFileRequest $request): JsonResponse
     {
@@ -132,10 +130,21 @@ class FileController extends BaseController
 
     public function download(TitleFolderFileRequest $request)
     {
-        $request->validated();
         $file = $this->fileRepository->findFile($request['user_id'], $request['file_title']);
 
-        if (!$file || !Storage::exists($file->path)){
+
+        if (!isset($file))
+        {
+            return response()->json(['error' => 'File does not exist (' . $request['file_title'] . ')']);
+        }
+
+        if (!Storage::exists($file->path)){
+            $user = $this->userRepository->findUser($request['user_id']);
+            $user->free_space += optional($file)->size;
+            $user->save();
+
+            $link = $file->link;
+            optional($link)->delete();
             optional($file)->delete();
             return response()->json(['error' => 'File does not exist (' . $request['file_title'] . ')']);
         }
