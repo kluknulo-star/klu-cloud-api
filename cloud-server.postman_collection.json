@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "457d8982-928d-4357-bfe0-91e733ac275c",
+		"name": "cloud-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"kirill\",\n    \"email\": \"kluknulo1@mail.ru\",\n    \"password\": \"Kirillkirill1!\",\n    \"password_confirmation\": \"Kirillkirill1!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/register",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$DuQx9vGPqu0Oq8sxoZb6nuN6nM0OKJtKq4TMKpQfmeHPYDkUF7sr6",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"kluknulo1@mail.ru\",\n    \"password\": \"Kirillkirill1!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/login",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://84.38.183.114/api/profile",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create folder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"folder_name\": \"myNewFolder\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/folders",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"folders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload file in root",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "6.docx"
+						},
+						{
+							"key": "folder_title",
+							"value": "createFolderWithRequest",
+							"contentType": "application/json",
+							"type": "default",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload file in specify directory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "Чанышева - Л5-6.  Оплата труда.pptx"
+						},
+						{
+							"key": "folder_title",
+							"value": "createFolderWithRequest",
+							"contentType": "application/json",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rename File",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"6.docx\",\n    \"new_file_title\": \"Six.pdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete File",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"1.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disk tree",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://84.38.183.114/api/disk",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"disk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"Six.pdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files/download",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Share file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"4.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files/share",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files",
+						"share"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download shared file",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "ooo_kinokompaniya_stv_6128776.pdf"
+						},
+						{
+							"key": "folder_title",
+							"value": "createFolderWithRequest",
+							"contentType": "application/json",
+							"type": "default",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/shared/9804a418-f116-4608-afa6-3f9f515dac4e",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"shared",
+						"9804a418-f116-4608-afa6-3f9f515dac4e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Share Link File",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "$2y$10$kUmHyDWdCARyOFPpUNPPE.clHvTN229W/Q3XdWCs5/AtxVNUM4DOG",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file_title\": \"4.docx\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://84.38.183.114/api/files/private",
+					"protocol": "http",
+					"host": [
+						"84",
+						"38",
+						"183",
+						"114"
+					],
+					"path": [
+						"api",
+						"files",
+						"private"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
