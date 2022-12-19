@@ -40,7 +40,7 @@ class FileController extends BaseController
         $user = $this->userRepository->findUser($request["user_id"]);
         $folders = $user->folders()->orderByDesc('created_at')->paginate(1000);
 
-        $diskSpace = 0;
+        $disk['free_space'] = $user->free_space;
         foreach ($folders as $folder)
         {
             $files = $folder->files()->paginate(100);
