@@ -100,6 +100,12 @@ class HomeController extends Controller
             "url" => "http://localhost/api/shared/9966c297-6439-4f21-a461-eed7741f8282"
         ];
 
+        $statement['response_login'] = [
+            "name" => "kirill",
+            "email" => "kluknulo1@mail.ru",
+            "token" => '$2y$10$s/642dJ40fxDmoXsfpUH3eQ6tLgDADer2QBW7dhY3roS02c3zYCUK'
+        ];
+
 
         return view('home', compact('statement'));
     }

@@ -54,7 +54,7 @@
         <div class="col-md-auto col-sm-12">
             <a class="text-decoration-none link-success" data-bs-toggle="collapse" href="#post_login" role="button"
                aria-expanded="false" aria-controls="post_login">
-                <h4 class="mb-0">POST: /api/api/login</h4>
+                <h4 class="mb-0">POST: /api/login</h4>
             </a>
         </div>
         <div class="col-auto">
@@ -62,7 +62,7 @@
                 Вход и получение токена
             </p>
             <div class="collapse mb-2" id="post_login">
-                <div class="col-auto">
+                <div class="col-auto mb-2">
                     <div class="row">
                         <div class="col-auto">
                             <div class="border-1 border-dark border-top border-start border-end rounded-top px-2 pt-1">
@@ -72,6 +72,24 @@
                     </div>
                     <div class="border-dark rounded-end rounded-bottom border p-2">
                 <pre class="mt-0 mb-0">{{json_encode($statement['login'],
+                        JSON_UNESCAPED_UNICODE |
+                        JSON_PRETTY_PRINT |
+                        JSON_UNESCAPED_SLASHES)}}</pre>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="bg-dark text-white border-bottom rounded-top px-2 pt-1">
+                                Response
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="text-white bg-dark rounded-end rounded-bottom p-2">
+                        {{--                        <p class="card-subtitle text-end mb-0">Response</p>--}}
+                        <pre class="mt-0 mb-0">{{json_encode($statement['response_login'],
                         JSON_UNESCAPED_UNICODE |
                         JSON_PRETTY_PRINT |
                         JSON_UNESCAPED_SLASHES)}}</pre>
