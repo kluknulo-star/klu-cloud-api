@@ -35,7 +35,7 @@ Route::prefix('/files')->middleware('auth.token')->group( function(){
 
     Route::get('/download', [FileController::class, 'download'])->name('file.download');
     Route::post('/share', [LinkController::class, 'store'])->name('file.share');
-    Route::delete('/private', [LinkController::class, 'destroy'])->name('file.greedy');
+    Route::delete('/share', [LinkController::class, 'destroy'])->name('file.greedy');
 });
 
 

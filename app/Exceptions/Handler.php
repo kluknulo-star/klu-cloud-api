@@ -49,11 +49,11 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Exception|Throwable $exception)
-    {
-        return response()->json([
-            'code'=>'404',
-            'error' => 'Not Found!'
-        ], 404);
-    }
+//    public function render($request, Exception|Throwable $exception)
+//    {
+//        return response()->json([
+//            'code'=>'404',
+//            'error' => 'Not Found!'
+//        ], 404);
+//    }
 }

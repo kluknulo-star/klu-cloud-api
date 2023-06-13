@@ -14,11 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Folder::factory(10)->create();
-
-        // \App\Models\Folder::factory()->create([
-        //     'name' => 'Test Folder',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            ]);
     }
 }
