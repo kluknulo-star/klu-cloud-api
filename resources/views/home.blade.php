@@ -6,6 +6,12 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="author" content="kluknulo">
+    <link rel="icon" type="image/x-icon" href="{{asset('favicon.png')}}">
+    <link rel="apple-touch-icon" href="{{asset('favicon180.png')}}">
+
+    <meta name="description" content="клюкнуло, Киляков Кирилл"/>
+    <meta name="keywords" content="kluknulo.ru"/>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
