@@ -32,6 +32,4 @@ class File extends Model
     {
         return $this->hasOne(Link::class, 'file_uuid', 'file_uuid');
     }
-
-
 }

@@ -4,13 +4,18 @@ namespace App\Folders\Models;
 
 use App\Files\Models\File;
 use App\Users\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * @property string $folder_uuid
- * @property string $title
+ * @property string $name
  * @property string $path
+ *
+ * @property User $user
+ * @property Collection<File> $files
  */
 
 class Folder extends Model
@@ -35,5 +40,4 @@ class Folder extends Model
     {
         return $this->hasMany(File::class, 'folder_uuid', 'folder_uuid');
     }
-
 }

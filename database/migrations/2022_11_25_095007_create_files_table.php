@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('file_uuid')->primary();
-            $table->string('title')->index();
+            $table->string('name')->index();
             $table->string('path');
             $table->foreignUuid('folder_uuid')
                 ->references('folder_uuid')

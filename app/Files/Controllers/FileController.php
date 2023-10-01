@@ -2,52 +2,41 @@
 
 namespace App\Files\Controllers;
 
+use App\Common\Factories\ListFactory;
+use App\Common\Traits\JsonResponsible;
 use App\Files\Repository\FileRepository;
 use App\Files\Requests\CreateFileRequest;
-use App\Files\Requests\TitleFileRequest;
-use App\Files\Requests\TitleFolderFileRequest;
 use App\Files\Requests\RenameFileRequest;
-use App\Files\Resources\FileResource;
+use App\Files\Requests\TitleFolderFileRequest;
 use App\Files\Services\FileService;
+use App\Folders\Actions\FileListAction;
 use App\Folders\Repository\FolderRepository;
 use App\Users\Repository\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 class FileController extends BaseController
 {
+    use JsonResponsible;
+
     public function __construct(
         private FileService $fileService,
         private FileRepository $fileRepository,
         private UserRepository $userRepository,
         private FolderRepository $folderRepository,
-    )
-    {
-
+    ) {
     }
 
-    /**
-     * Show all files and folders in user disk
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function disk(Request $request) : JsonResponse
+    public function disk(Request $request, FileListAction $action) : JsonResponse
     {
-        $user = $this->userRepository->findUser($request["user_id"]);
-        $folders = $user->folders()->orderByDesc('created_at')->paginate(1000);
+        $pagingDto = ListFactory::fromRequest($request);
 
-        $disk['free_space'] = $user->free_space;
-        foreach ($folders as $folder)
-        {
-            $files = $folder->files()->paginate(100);
-            $filesJson = FileResource::collection($files);
-            $disk['disk'][$folder->title ?? '__ROOT_FOLDER__'] = $filesJson;
-        }
-        return response()->json($disk);
+        return $this->success($action->execute($pagingDto, Auth::user()));
     }
 
     /**

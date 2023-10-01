@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\File;
 
-class CreateFileRequest extends FormRequest
+class FileListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class CreateFileRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'file' => ['required', File::default()->max(20480)],
+            'user_id' => ['required', File::default()->max(20480)],
             'user_id' => 'required|int',
             'folder_name' => 'optional|string'
         ];

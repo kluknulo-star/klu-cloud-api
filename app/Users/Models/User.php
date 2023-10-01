@@ -2,7 +2,6 @@
 
 namespace App\Users\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Files\Models\File;
 use App\Folders\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property int $user_id
+ * @property int $id
  * @property string $token
  * @property string $email
  * @property string $name
