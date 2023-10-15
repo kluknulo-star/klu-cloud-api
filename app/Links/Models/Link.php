@@ -19,7 +19,6 @@ class Link extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $primaryKey = 'link_uuid';
     /**
      * The attributes that are mass assignable.
      *
@@ -29,7 +28,7 @@ class Link extends Model
 
     public function file()
     {
-        return $this->belongsTo(File::class, 'file_uuid', 'file_uuid');
+        return $this->belongsTo(File::class, 'file_uuid');
     }
 
 }

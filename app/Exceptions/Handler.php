@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Common\Exceptions\BusinessLogicException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -49,11 +51,16 @@ class Handler extends ExceptionHandler
         });
     }
 
-//    public function render($request, Exception|Throwable $exception)
-//    {
-//        return response()->json([
-//            'code'=>'404',
-//            'error' => 'Not Found!'
-//        ], 404);
-//    }
+    public function render($request, Exception|Throwable $e): Response
+    {
+        if ($e instanceof BusinessLogicException) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->getErrors(),
+                'message' => $e->getMessage(),
+            ], $e->getCode());
+        }
+
+        return parent::render($request, $e);
+    }
 }

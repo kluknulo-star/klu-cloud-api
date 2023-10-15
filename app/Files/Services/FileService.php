@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Storage;
 class FileService
 {
 
-    public function saveUserFile(int $userId,mixed $file,string $uuidFolder) : bool|string
-    {
-        return Storage::put("disk/$userId", $file);
-    }
-
     public function deleteUserFile(string $path): bool
     {
         return Storage::delete($path);

@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('folders', function (Blueprint $table) {
-            $table->uuid('folder_uuid')->primary();
+            $table->uuid()->primary();
             $table->string('name')->nullable();
             $table->foreignId('user_id')
-                ->references('user_id')
+                ->references('id')
                 ->on('users');
             $table->timestamps();
         });

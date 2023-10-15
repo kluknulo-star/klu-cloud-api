@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('files', function (Blueprint $table) {
-            $table->uuid('file_uuid')->primary();
+            $table->uuid()->primary();
             $table->string('name')->index();
             $table->string('path');
             $table->foreignUuid('folder_uuid')
-                ->references('folder_uuid')
+                ->references('uuid')
                 ->on('folders');
             $table->bigInteger('size');
             $table->foreignId('user_id')
-                ->references('user_id')
+                ->references('id')
                 ->on('users');
             $table->timestamps();
         });

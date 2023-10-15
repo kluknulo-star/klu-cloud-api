@@ -2,12 +2,13 @@
 
 namespace App\Users\Models;
 
-use App\Files\Models\File;
 use App\Folders\Models\Folder;
+use Illuminate\Database\Eloquent\Collection;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
@@ -16,13 +17,14 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property string $root_folder
  * @property int $free_space
+ *
+ * @property Collection<Folder> $folders
  */
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'user_id';
     /**
      * The attributes that are mass assignable.
      *
@@ -49,8 +51,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function folders()
+    public function folders(): hasMany
     {
-        return $this->hasMany(Folder::class, 'user_id', 'user_id');
+        return $this->hasMany(Folder::class, 'user_id');
     }
 }

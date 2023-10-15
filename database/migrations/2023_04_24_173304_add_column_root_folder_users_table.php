@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignUuid('root_folder')->nullable()->references('folder_uuid')->on('folders');
+            $table->foreignUuid('root_folder')
+                ->nullable()
+                ->references('uuid')
+                ->on('folders');
         });
     }
 

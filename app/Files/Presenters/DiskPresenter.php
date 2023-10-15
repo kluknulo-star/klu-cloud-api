@@ -2,7 +2,7 @@
 
 namespace App\Files\Presenters;
 
-class DiskPresenter
+final class DiskPresenter
 {
 
 }

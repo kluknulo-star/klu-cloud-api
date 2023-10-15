@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('links', function (Blueprint $table) {
-            $table->uuid('link_uuid')->primary();
+            $table->uuid()->primary();
             $table->foreignUuid('file_uuid')
-                ->references('file_uuid')
+                ->references('uuid')
                 ->on('files');
             $table->timestamps();
         });

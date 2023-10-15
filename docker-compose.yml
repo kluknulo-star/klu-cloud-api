@@ -7,7 +7,7 @@ services:
       - ./:/var/www
       - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - 80:80
+      - 8000:8000
     depends_on:
       - app
 
@@ -24,7 +24,7 @@ services:
     image: postgres:latest
     restart: always
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
       - POSTGRES_USER=kluknulo
       - POSTGRES_PASSWORD=kluknulo

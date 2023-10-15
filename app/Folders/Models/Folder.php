@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string $folder_uuid
+ * @property string $uuid
  * @property string $name
- * @property string $path
+ * @property int $user_id
  *
  * @property User $user
  * @property Collection<File> $files
@@ -23,7 +23,6 @@ class Folder extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $primaryKey = 'folder_uuid';
     /**
      * The attributes that are mass assignable.
      *
@@ -33,11 +32,11 @@ class Folder extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function files()
     {
-        return $this->hasMany(File::class, 'folder_uuid', 'folder_uuid');
+        return $this->hasMany(File::class, 'folder_uuid');
     }
 }

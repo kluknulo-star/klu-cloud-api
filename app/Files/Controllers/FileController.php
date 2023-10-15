@@ -4,6 +4,9 @@ namespace App\Files\Controllers;
 
 use App\Common\Factories\ListFactory;
 use App\Common\Traits\JsonResponsible;
+use App\Files\Actions\CreateFileAction;
+use App\Files\Factories\CreateFileFactory;
+use App\Files\Presenters\FilePresenter;
 use App\Files\Repository\FileRepository;
 use App\Files\Requests\CreateFileRequest;
 use App\Files\Requests\RenameFileRequest;
@@ -19,16 +22,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-
 class FileController extends BaseController
 {
     use JsonResponsible;
 
     public function __construct(
-        private FileService $fileService,
-        private FileRepository $fileRepository,
-        private UserRepository $userRepository,
-        private FolderRepository $folderRepository,
+        private readonly FileService $fileService,
+        private readonly FileRepository $fileRepository,
+        private readonly UserRepository $userRepository,
+        private readonly FolderRepository $folderRepository,
     ) {
     }
 
@@ -39,51 +41,12 @@ class FileController extends BaseController
         return $this->success($action->execute($pagingDto, Auth::user()));
     }
 
-    /**
-     * Create file on user drive
-     * @param CreateFileRequest $request
-     * @return JsonResponse
-     */
-    public function store(CreateFileRequest $request): JsonResponse
+    public function store(CreateFileRequest $request, CreateFileAction $action, FilePresenter $presenter): JsonResponse
     {
-        $file = $request->file('file');
-        $user = $this->userRepository->findUser($request['user_id']);
-        $isExistFile = $this->fileRepository->findFile($request['user_id'], $file->getClientOriginalName());
+        $fileDTO = CreateFileFactory::fromRequest($request);
+        $file = $action->execute($fileDTO);
 
-        if ($isExistFile){
-            return response()->json(['error' => 'File with that title already exists']);
-        }
-
-        if ($this->fileService->isFilesPhpMimes($file->getMimeType()))
-        {
-            return response()->json(['error' => 'Php files are not supported']);
-        }
-
-        if ($file->getSize() > $user->free_space)
-        {
-            return response()->json(['error' => 'Not enough free disk space']);
-        }
-        $user->free_space -= $file->getSize();
-        $user->save();
-
-        $uuidFolder = $user->root_folder;
-        if ($request['folder_title'])
-        {
-            $folder = $this->folderRepository->findFolderByTitle($request['folder_title'], $request['user_id']);
-            $uuidFolder = $folder->folder_uuid;
-        }
-
-        $path = $this->fileService->saveUserFile($request['user_id'], $file, $uuidFolder);
-
-        if (!$path){
-            return response()->json(['error' => 'Error when uploading a file to the server']);
-        }
-
-        $title = $file->getClientOriginalName();
-        $size = $file->getSize();
-        $this->fileRepository->saveUserFile($uuidFolder, $title, $path, $size, $request['user_id']);
-
-        return response()->json(['result' => 'File saved (' . $file->getClientOriginalName().')' ]);
+        return $this->success($presenter->present($file));
     }
 
 
